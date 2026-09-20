@@ -10,7 +10,6 @@ GLEP stands for GBNF LLM Edge Pentester, a silent pentesting agent on a Raspberr
 
 Named after [Glep](https://smilingfriends.fandom.com/wiki/Glep) from *Smiling Friends*
 
-## Logo
 
 ```text
                                                       ######
@@ -56,4 +55,3 @@ Named after [Glep](https://smilingfriends.fandom.com/wiki/Glep) from *Smiling Fr
 ```
 
 
-*Smiling Friends* y el personaje Glep son propiedad de sus respectivos creadores; el logo ASCII de arriba es una obra derivada fan-made sin fines comerciales.
