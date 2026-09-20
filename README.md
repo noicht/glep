@@ -1,2 +1,10 @@
 # glep
 GLEP stands for GBNF LLM Edge Pentester, a silent pentesting agent on a Raspberry Pi Zero 2W. No chat, no text, no GPU, just a ReAct loop that decides and executes.
+
+- Qwen2.5-0.5B-Instruct (Q3_K_M) on llama.cpp
+- GBNF grammar → output is always a valid JSON tool call
+- ReAct loop: observe → decide → execute → repeat
+- Tools: nmap, nikto, hydra, sqlmap, curl, dig
+- Runs 100% offline on a Raspberry Pi Zero 2W (512MB, no GPU)
+
+Named after [Glep](https://smilingfriends.fandom.com/wiki/Glep) from *Smiling Friends*
