@@ -1,0 +1,39 @@
+# Config para el lab local (lab/docker-compose.yml).
+# Target loopback: no requiere --authorized.
+policy:
+  mode: deterministic
+  fallback_to_deterministic: true
+  allow_exploit: true          # sqlmap detecta SQLi en /product?id=1
+  allow_bruteforce: false      # el lab expone SSH falso; hydra no está instalado
+  max_http_probes: 10
+
+llm:
+  model_path: ./models/Qwen2.5-0.5B-Instruct-Q3_K_M.gguf
+  grammar_path: grammar/tool_call.gbnf
+  n_ctx: 512
+  n_threads: 4
+  timeout_seconds: 20
+
+target:
+  host: 127.0.0.1
+  # Solo los puertos publicados por el lab, para un scan rápido y limpio.
+  port_range: "12000-19999"
+  web_ports: [18080]
+  authorized: false
+  allow_public: false
+
+tools:
+  timeout_seconds: 120
+  wordlists:
+    users: ./lab/wordlists/users.txt
+    passwords: ./lab/wordlists/passwords.txt
+
+loop:
+  max_iterations: 100
+
+report:
+  dir: ./reports
+
+logging:
+  file: ./logs/glep-lab.log
+  level: INFO

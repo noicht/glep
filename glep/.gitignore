@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.gguf
+/var/log/glep/
+logs/
+.pytest_cache/
+reports/
+dist/
+build/
+*.egg-info/

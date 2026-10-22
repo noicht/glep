@@ -1,0 +1,53 @@
+# Configuración de GLEP
+
+policy:
+  # "deterministic" | "llm"
+  # Arrancá con deterministic para validar la plumbing; llm es experimental.
+  mode: deterministic
+  # Si mode=llm falla, da timeout, o produce una acción inválida, se cae
+  # siempre a DeterministicPolicy.
+  fallback_to_deterministic: true
+  # sqlmap solo detecta (--level=1 --risk=1), pero sigue siendo tráfico
+  # ofensivo: desactivalo si no querés que se confirme SQLi.
+  allow_exploit: true
+  # hydra NO corre por defecto: puede bloquear cuentas y hace mucho ruido.
+  allow_bruteforce: false
+  # Tope de URLs con query params a sondear por SQLi.
+  max_http_probes: 20
+
+llm:
+  model_path: ./models/Qwen2.5-0.5B-Instruct-Q3_K_M.gguf
+  grammar_path: grammar/tool_call.gbnf
+  n_ctx: 512
+  n_threads: 4
+  timeout_seconds: 15
+
+target:
+  host: 127.0.0.1
+  # Rango de puertos a considerar en la fase de recon
+  port_range: "1-1024"
+  # Puertos que se tratan como web aunque nmap no detecte el servicio.
+  # Ejemplo lab: [18080]
+  web_ports: []
+  # Un target privado/LAN requiere --authorized (o authorized: true).
+  authorized: false
+  # Un target público requiere --authorized Y allow_public: true.
+  allow_public: false
+
+tools:
+  # Timeout por ejecución de tool (nmap/nikto/sqlmap pueden tardar).
+  timeout_seconds: 120
+  wordlists:
+    users: /opt/glep/wordlists/users.txt
+    passwords: /opt/glep/wordlists/passwords.txt
+
+loop:
+  max_iterations: 200
+
+report:
+  dir: ./reports
+
+logging:
+  #file: /var/log/glep/glep.log
+  file: ./logs/glep.log
+  level: INFO

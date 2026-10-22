@@ -1,0 +1,20 @@
+# Gramática GBNF que fuerza la salida del modelo a ser un tool call JSON
+# válido, con el shape { "tool": "<nombre>", "args": { ... } }.
+#
+# El set de "tool" está fijado al conjunto de herramientas soportadas.
+# Esto restringe la SINTAXIS del output, no la calidad semántica de la
+# decisión — por eso LLMPolicy además valida que la acción tenga sentido
+# para el estado actual antes de ejecutarla.
+
+root   ::= "{" ws "\"tool\":" ws tool "," ws "\"args\":" ws args ws "}"
+
+tool   ::= "\"nmap\"" | "\"nikto\"" | "\"hydra\"" | "\"sqlmap\"" | "\"curl\"" | "\"dig\""
+
+args   ::= "{" ws (pair ("," ws pair)*)? ws "}"
+pair   ::= string ":" ws value
+value  ::= string | number | "true" | "false" | "null"
+
+string ::= "\"" ([^"\\] | "\\" .)* "\""
+number ::= "-"? [0-9]+ ("." [0-9]+)?
+
+ws     ::= [ \t\n]*
